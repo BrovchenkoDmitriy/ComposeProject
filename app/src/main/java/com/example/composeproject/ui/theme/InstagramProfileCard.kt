@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -28,10 +29,10 @@ fun InstagramProfileCard() {
             topEnd = 4.dp
         ),
         colors = CardDefaults.cardColors(
-            containerColor = Color.White,
-            contentColor = Color.Black
+            containerColor = MaterialTheme.colorScheme.background,
+            contentColor =  MaterialTheme.colorScheme.onPrimaryContainer
         ),
-        border = BorderStroke(1.dp, Color.Black),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.onBackground),
         modifier = Modifier.padding(4.dp)
     ) {
         Row(
@@ -73,3 +74,13 @@ private fun TwoBoxes(value:String, description:String) {
         }
     }
 }
+
+@Preview
+@Composable
+ fun Dark(){
+    ComposeProjectTheme(
+        darkTheme = true
+    ) {
+        InstagramProfileCard()
+    }
+ }
