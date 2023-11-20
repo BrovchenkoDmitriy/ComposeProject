@@ -1,5 +1,6 @@
 package com.example.composeproject.ui.theme
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -7,6 +8,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -18,23 +22,36 @@ import androidx.compose.ui.unit.dp
 @Preview(showBackground = true)
 @Composable
 fun InstagramProfileCard() {
-    Row(
-        modifier = Modifier
-            .padding(8.dp)
-            .fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceEvenly
+    Card(
+        shape = RoundedCornerShape(
+            topStart = 4.dp,
+            topEnd = 4.dp
+        ),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White,
+            contentColor = Color.Black
+        ),
+        border = BorderStroke(1.dp, Color.Black),
+        modifier = Modifier.padding(4.dp)
     ) {
-        Box(
+        Row(
             modifier = Modifier
-                .background(Color.Red),
-            contentAlignment = Alignment.Center
+                .padding(8.dp)
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            Text(text = "10")
+            Box(
+                modifier = Modifier
+                    .background(Color.Red),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(text = "10")
+            }
+            TwoBoxes("7.000", "fol")
+            TwoBoxes("8.000", "dal")
+            TwoBoxes("9.000", "kut")
         }
-        TwoBoxes("7.000","fol")
-        TwoBoxes("8.000","dal")
-        TwoBoxes("9.000","kut")
     }
 }
 
