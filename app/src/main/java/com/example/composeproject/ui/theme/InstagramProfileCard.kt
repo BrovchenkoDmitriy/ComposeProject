@@ -1,13 +1,17 @@
 package com.example.composeproject.ui.theme
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -16,13 +20,18 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.composeproject.R
 
 @Preview(showBackground = true)
 @Composable
@@ -34,7 +43,7 @@ fun InstagramProfileCard() {
         ),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.background,
-            contentColor =  MaterialTheme.colorScheme.onPrimaryContainer
+            contentColor = MaterialTheme.colorScheme.onPrimaryContainer
         ),
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.onBackground),
         modifier = Modifier.padding(4.dp)
@@ -51,7 +60,7 @@ fun InstagramProfileCard() {
                     .background(Color.Red),
                 contentAlignment = Alignment.Center
             ) {
-                Text(text = "10")
+                InstagramLogo()
             }
             UserStatistics("7.000", "Posts")
             UserStatistics("8.000", "Followers")
@@ -61,7 +70,7 @@ fun InstagramProfileCard() {
 }
 
 @Composable
-private fun UserStatistics(value:String, description:String) {
+private fun UserStatistics(value: String, description: String) {
     Column(
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -69,26 +78,54 @@ private fun UserStatistics(value:String, description:String) {
         Box(
             contentAlignment = Alignment.Center
         ) {
-            Text(text = value,
+            Text(
+                text = value,
                 fontSize = 24.sp,
                 fontStyle = FontStyle.Italic,
-                fontFamily = FontFamily.Cursive)
+                fontFamily = FontFamily.Cursive
+            )
         }
         Box(
             contentAlignment = Alignment.Center
         ) {
-            Text(text = description,
-                fontWeight = FontWeight.Bold)
+            Text(
+                text = description,
+                fontWeight = FontWeight.Bold
+            )
         }
+    }
+}
+
+@Composable
+private fun InstagramLogo() {
+    Box(
+        Modifier
+            .width(50.dp)
+            .height(50.dp)
+            .background(MaterialTheme.colorScheme.background)
+    ) {
+        Image(
+            modifier = Modifier
+                .clip(CircleShape)
+                .paint
+                    (
+                    painterResource(id = R.drawable.ic_launcher_background),
+                    contentScale = ContentScale.Inside,
+                ),
+//                .background(Color.Green)
+            painter = painterResource(id = R.drawable.ic_launcher_foreground),
+            contentDescription = "Instagram_logo",
+            contentScale = ContentScale.Inside,
+        )
     }
 }
 
 @Preview
 @Composable
- fun Dark(){
+fun Dark() {
     ComposeProjectTheme(
         darkTheme = true
     ) {
         InstagramProfileCard()
     }
- }
+}
