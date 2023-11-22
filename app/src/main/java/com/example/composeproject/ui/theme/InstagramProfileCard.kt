@@ -97,13 +97,10 @@ private fun UserStatistics(value: String, description: String) {
 
 @Composable
 private fun InstagramLogo() {
-    Box(
-        Modifier
-            .size(50.dp)
-            .background(MaterialTheme.colorScheme.background)
-    ) {
         Image(
             modifier = Modifier
+                .size(50.dp)
+                .background(MaterialTheme.colorScheme.background)
                 .clip(CircleShape)
                 .background(MaterialTheme.colorScheme.onBackground)
                 .padding(1.dp)
@@ -117,7 +114,6 @@ private fun InstagramLogo() {
             contentDescription = "Instagram_logo",
             contentScale = ContentScale.Inside,
         )
-    }
 }
 
 @Preview
