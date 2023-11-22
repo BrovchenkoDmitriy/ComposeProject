@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -47,24 +48,57 @@ fun InstagramProfileCard() {
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.onBackground),
         modifier = Modifier.padding(4.dp)
     ) {
-        Row(
-            modifier = Modifier
-                .padding(8.dp)
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceEvenly
-        ) {
-            Box(
+        Column {
+            Row(
                 modifier = Modifier
-                    .background(Color.Red),
-                contentAlignment = Alignment.Center
+                    .padding(16.dp)
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                InstagramLogo()
+                Box(
+                    modifier = Modifier
+                        .background(Color.Red),
+                    contentAlignment = Alignment.Center
+                ) {
+                    InstagramLogo()
+                }
+                UserStatistics("7.000", "Posts")
+                UserStatistics("8.000", "Followers")
+                UserStatistics("9.000", "Following")
             }
-            UserStatistics("7.000", "Posts")
-            UserStatistics("8.000", "Followers")
-            UserStatistics("9.000", "Following")
+            Text(
+                text = "Instagram",
+                fontFamily = FontFamily.Cursive,
+                fontSize = 32.sp,
+                modifier = Modifier.padding(start = 16.dp)
+            )
+            ContactInfo(value = "#YoursToMake")
+            ContactInfo(value = "www.facebook.com/emotional_health")
+            FollowButton()
         }
+    }
+}
+
+@Composable
+private fun ContactInfo(value: String) {
+    Text(
+        text = value,
+        fontFamily = FontFamily.SansSerif,
+        fontWeight = FontWeight.SemiBold,
+        modifier = Modifier.padding(start = 16.dp)
+    )
+}
+
+@Composable
+private fun FollowButton() {
+    Button(
+        modifier = Modifier
+            .padding(start = 16.dp, bottom = 16.dp),
+        shape = RoundedCornerShape(4.dp),
+        onClick = { /*TODO*/ }
+    ) {
+        Text(text = "Follow")
     }
 }
 
@@ -97,23 +131,23 @@ private fun UserStatistics(value: String, description: String) {
 
 @Composable
 private fun InstagramLogo() {
-        Image(
-            modifier = Modifier
-                .size(50.dp)
-                .background(MaterialTheme.colorScheme.background)
-                .clip(CircleShape)
-                .background(MaterialTheme.colorScheme.onBackground)
-                .padding(1.dp)
-                .clip(CircleShape)
-                .paint
-                    (
-                    painterResource(id = R.drawable.ic_launcher_background),
-                    contentScale = ContentScale.Inside,
-                ),
-            painter = painterResource(id = R.drawable.ic_launcher_foreground),
-            contentDescription = "Instagram_logo",
-            contentScale = ContentScale.Inside,
-        )
+    Image(
+        modifier = Modifier
+            .size(60.dp)
+            .background(MaterialTheme.colorScheme.background)
+            .clip(CircleShape)
+            .background(MaterialTheme.colorScheme.onBackground)
+            .padding(1.dp)
+            .clip(CircleShape)
+            .paint
+                (
+                painterResource(id = R.drawable.ic_launcher_background),
+                contentScale = ContentScale.Inside,
+            ),
+        painter = painterResource(id = R.drawable.ic_launcher_foreground),
+        contentDescription = "Instagram_logo",
+        contentScale = ContentScale.Inside,
+    )
 }
 
 @Preview
