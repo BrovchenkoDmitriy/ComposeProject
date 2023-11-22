@@ -8,9 +8,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -43,7 +42,7 @@ fun InstagramProfileCard() {
         ),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.background,
-            contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+            contentColor = MaterialTheme.colorScheme.onBackground
         ),
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.onBackground),
         modifier = Modifier.padding(4.dp)
@@ -100,19 +99,20 @@ private fun UserStatistics(value: String, description: String) {
 private fun InstagramLogo() {
     Box(
         Modifier
-            .width(50.dp)
-            .height(50.dp)
+            .size(50.dp)
             .background(MaterialTheme.colorScheme.background)
     ) {
         Image(
             modifier = Modifier
+                .clip(CircleShape)
+                .background(MaterialTheme.colorScheme.onBackground)
+                .padding(1.dp)
                 .clip(CircleShape)
                 .paint
                     (
                     painterResource(id = R.drawable.ic_launcher_background),
                     contentScale = ContentScale.Inside,
                 ),
-//                .background(Color.Green)
             painter = painterResource(id = R.drawable.ic_launcher_foreground),
             contentDescription = "Instagram_logo",
             contentScale = ContentScale.Inside,
