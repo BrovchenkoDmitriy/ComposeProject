@@ -1,16 +1,17 @@
 package com.example.composeproject.ui.theme
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -60,6 +61,7 @@ fun VkNewsCard() {
                     .padding(8.dp)
                     .fillMaxWidth()
             )
+            BottomMenuOfVkNewsCard()
         }
     }
 }
@@ -77,10 +79,25 @@ private fun HeadOfVkNewsCard() {
         TittleAndTime(tittle = "уволено", time = "14:00")
         Spacer(
             Modifier
-                .weight(1f)
-                .fillMaxWidth()
+                .weight(1f, true)
         )
-        MenuButton()
+        MenuButton(R.drawable.ic_stat_name)
+    }
+}
+
+@Composable
+private fun BottomMenuOfVkNewsCard() {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 8.dp, end = 8.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        BottomMenuButton("206", R.drawable.ic_views)
+        Spacer(Modifier.weight(1f, true))
+        BottomMenuButton("206", R.drawable.ic_share)
+        BottomMenuButton("11", R.drawable.ic_comments)
+        BottomMenuButton("491", R.drawable.ic_chosen)
     }
 }
 
@@ -105,37 +122,49 @@ private fun VkAvatar() {
 
 @Composable
 private fun TittleAndTime(tittle: String, time: String) {
-    Box(
-        modifier = Modifier.padding(start = 8.dp, end = 8.dp)
+    Column(
+        modifier = Modifier.padding(start = 8.dp, end = 8.dp),
+        verticalArrangement = Arrangement.SpaceAround
     ) {
-        Column(
-            verticalArrangement = Arrangement.SpaceAround
-        ) {
-            Text(
-                text = tittle,
-                fontWeight = FontWeight.SemiBold
-            )
-            Text(text = time)
-        }
+        Text(
+            text = tittle,
+            fontWeight = FontWeight.SemiBold
+        )
+        Text(text = time)
     }
 }
 
 @Composable
-private fun MenuButton() {
+private fun MenuButton(@DrawableRes id: Int) {
     IconButton(
         onClick = { /*TODO*/ },
         content = {
-            MenuICon()
+            Icon(
+                painter = painterResource(id),
+                contentDescription = "menu"
+            )
         }
     )
 }
 
 @Composable
-private fun MenuICon() {
-    Icon(
-        painter = painterResource(R.drawable.ic_stat_name),
-        contentDescription = "menu"
-    )
+private fun BottomMenuButton(value: String, @DrawableRes id: Int) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.padding(0.dp)
+    ){
+        Text(text = value)
+        IconButton(
+            onClick = { /*TODO*/ },
+            modifier = Modifier.wrapContentSize(),
+        ) {
+            Icon(
+                painter = painterResource(id),
+                contentDescription = "menu"
+            )
+        }
+    }
+
 }
 
 
