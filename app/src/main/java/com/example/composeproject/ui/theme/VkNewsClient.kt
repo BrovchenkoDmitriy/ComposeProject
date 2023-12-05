@@ -9,11 +9,15 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -26,9 +30,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.composeproject.R
@@ -50,13 +55,13 @@ fun VkNewsCard() {
         ) {
             HeadOfVkNewsCard()
             Text(
-                text = "Просто обычный текст, не несущий смысловой нагрузки и предназначенный для теста.",
+                text = stringResource(R.string.template_text),
                 modifier = Modifier.padding(8.dp)
             )
             Image(
                 painter = painterResource(id = R.drawable.ic_launcher_background),
                 contentScale = ContentScale.Crop,
-                contentDescription = "Content",
+                contentDescription = stringResource(R.string.content),
                 modifier = Modifier
                     .padding(8.dp)
                     .fillMaxWidth()
@@ -76,12 +81,15 @@ private fun HeadOfVkNewsCard() {
         horizontalArrangement = Arrangement.Start
     ) {
         VkAvatar()
-        TittleAndTime(tittle = "уволено", time = "14:00")
-        Spacer(
-            Modifier
-                .weight(1f, true)
-        )
-        MenuButton(R.drawable.ic_stat_name)
+        Spacer(modifier = Modifier.width(4.dp))
+        Column (
+            modifier = Modifier.weight(1f)
+        ){
+            Text(text = "уволено")
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(text = "14:20")
+        }
+        MenuButton(Icons.Rounded.MoreVert)
     }
 }
 
@@ -114,34 +122,20 @@ private fun VkAvatar() {
                 contentScale = ContentScale.Inside,
             ),
         painter = painterResource(id = R.drawable.ic_launcher_foreground),
-        contentDescription = "Instagram_logo",
+        contentDescription = stringResource(R.string.instagram_logo),
         contentScale = ContentScale.Inside,
 
         )
 }
 
 @Composable
-private fun TittleAndTime(tittle: String, time: String) {
-    Column(
-        modifier = Modifier.padding(start = 8.dp, end = 8.dp),
-        verticalArrangement = Arrangement.SpaceAround
-    ) {
-        Text(
-            text = tittle,
-            fontWeight = FontWeight.SemiBold
-        )
-        Text(text = time)
-    }
-}
-
-@Composable
-private fun MenuButton(@DrawableRes id: Int) {
+private fun MenuButton(id: ImageVector) {
     IconButton(
         onClick = { /*TODO*/ },
         content = {
             Icon(
-                painter = painterResource(id),
-                contentDescription = "menu"
+                imageVector = id,
+                contentDescription = stringResource(R.string.menu)
             )
         }
     )
@@ -152,19 +146,19 @@ private fun BottomMenuButton(value: String, @DrawableRes id: Int) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.padding(0.dp)
-    ){
+    ) {
         Text(text = value)
         IconButton(
             onClick = { /*TODO*/ },
             modifier = Modifier.wrapContentSize(),
         ) {
             Icon(
+
                 painter = painterResource(id),
-                contentDescription = "menu"
+                contentDescription = stringResource(R.string.bottom_menu)
             )
         }
     }
-
 }
 
 
