@@ -1,25 +1,38 @@
 package com.example.composeproject.ui.theme
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
 fun MainScreen() {
+    val snackbarHostState = SnackbarHostState()
+    val scope = rememberCoroutineScope()
+    val fabIsVisible = rememberSaveable {
+        mutableStateOf(true)
+    }
     Scaffold(
         bottomBar = {
             val items = listOf(
@@ -31,10 +44,10 @@ fun MainScreen() {
                 val selectedPosition = rememberSaveable {
                     mutableStateOf(0)
                 }
-                items.forEachIndexed {index, item ->
+                items.forEachIndexed { index, item ->
                     NavigationBarItem(
-                        selected = index==selectedPosition.value,
-                        onClick = {selectedPosition.value = index},
+                        selected = index == selectedPosition.value,
+                        onClick = { selectedPosition.value = index },
                         icon = {
                             Icon(
                                 imageVector = item.icon,
@@ -52,6 +65,26 @@ fun MainScreen() {
                     )
                 }
             }
+        },
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
+        },
+        floatingActionButton = {
+            if (fabIsVisible.value) {
+                FloatingActionButton(
+                    onClick = {
+                        scope.launch {
+                            val action =
+                                snackbarHostState.showSnackbar("Hello", actionLabel = "Hide")
+                            if (action == SnackbarResult.ActionPerformed) {
+                                fabIsVisible.value = false
+                            }
+                        }
+                    }) {
+                    Icon(imageVector = Icons.Filled.Add, contentDescription = null)
+                }
+            }
+
         }
     ) {
         Text(
