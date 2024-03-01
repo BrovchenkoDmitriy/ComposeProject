@@ -5,4 +5,8 @@
     <string name="bottom_menu">menu</string>
     <string name="instagram_logo">Instagram_logo</string>
     <string name="content">Content</string>
+
+    <string name="navigation_item_home">Главная</string>
+    <string name="navigation_item_favorite">Избранное</string>
+    <string name="navigation_item_profile">Профиль</string>
 </resources>
