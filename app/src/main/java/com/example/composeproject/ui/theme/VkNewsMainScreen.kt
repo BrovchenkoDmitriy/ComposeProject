@@ -17,10 +17,12 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -35,7 +37,7 @@ fun MainScreen() {
     }
     Log.d("blablabla", snackbarHostState.currentSnackbarData.toString())
     val scope = rememberCoroutineScope()
-    val fabIsVisible = rememberSaveable {
+    var fabIsVisible by rememberSaveable {
         mutableStateOf(true)
     }
     Scaffold(
@@ -75,14 +77,14 @@ fun MainScreen() {
             SnackbarHost(hostState = snackbarHostState)
         },
         floatingActionButton = {
-            if (fabIsVisible.value) {
+            if (fabIsVisible) {
                 FloatingActionButton(
                     onClick = {
                         scope.launch {
                             val action =
                                 snackbarHostState.showSnackbar("Hello", actionLabel = "Hide")
                             if (action == SnackbarResult.ActionPerformed) {
-                                fabIsVisible.value = false
+                                fabIsVisible = false
                             }
                         }
                     }) {

@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.lifecycle.ViewModelProvider
 import com.example.composeproject.ui.theme.ComposeProjectTheme
 import com.example.composeproject.ui.theme.InstagramProfileCard
+import com.example.composeproject.ui.theme.MainScreen
 import com.example.composeproject.ui.theme.VkNewsMainScreenViewModel
 
 class MainActivity : ComponentActivity() {
@@ -18,6 +19,7 @@ class MainActivity : ComponentActivity() {
 //            }
             ComposeProjectTheme {
                 InstagramProfileCard(viewModel = viewModel)
+//                MainScreen()
             }
         }
     }
