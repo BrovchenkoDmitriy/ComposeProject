@@ -4,6 +4,7 @@ import androidx.annotation.DrawableRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,7 +14,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -34,13 +34,19 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.composeproject.R
+import com.example.composeproject.domain.FeedPost
+import com.example.composeproject.domain.StatisticItem
+import com.example.composeproject.domain.StatisticType
 
-@Preview
 @Composable
-fun VkNewsCard() {
+fun VkNewsCard(
+    modifier: Modifier = Modifier,
+    feedPost: FeedPost,
+    onStatisticsItemClickListener: (StatisticItem) -> Unit
+
+) {
     Card(
         shape = RoundedCornerShape(4.dp),
         colors = CardDefaults.cardColors(
@@ -53,26 +59,30 @@ fun VkNewsCard() {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            HeadOfVkNewsCard()
+            HeadOfVkNewsCard(feedPost)
             Text(
-                text = stringResource(R.string.template_text),
+                text = feedPost.contentText,
                 modifier = Modifier.padding(8.dp)
             )
             Image(
-                painter = painterResource(id = R.drawable.ic_launcher_background),
+                painter = painterResource(id = feedPost.contentImageResId),
                 contentScale = ContentScale.Crop,
                 contentDescription = stringResource(R.string.content),
                 modifier = Modifier
                     .padding(8.dp)
                     .fillMaxWidth()
+                    .height(200.dp)
             )
-            BottomMenuOfVkNewsCard()
+            StatisticsOfVkNewsCard(
+                feedPost.statistics,
+                onItemClickListener = onStatisticsItemClickListener
+            )
         }
     }
 }
 
 @Composable
-private fun HeadOfVkNewsCard() {
+private fun HeadOfVkNewsCard(feedPost: FeedPost) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -80,37 +90,64 @@ private fun HeadOfVkNewsCard() {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Start
     ) {
-        VkAvatar()
+        VkAvatar(feedPost)
         Spacer(modifier = Modifier.width(4.dp))
-        Column (
+        Column(
             modifier = Modifier.weight(1f)
-        ){
-            Text(text = "уволено")
+        ) {
+            Text(text = feedPost.communityName)
             Spacer(modifier = Modifier.height(4.dp))
-            Text(text = "14:20")
+            Text(text = feedPost.publicationDate)
         }
         MenuButton(Icons.Rounded.MoreVert)
     }
 }
 
 @Composable
-private fun BottomMenuOfVkNewsCard() {
+private fun StatisticsOfVkNewsCard(
+    statistics: List<StatisticItem>,
+    onItemClickListener: (StatisticItem) -> Unit
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(start = 8.dp, end = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        BottomMenuButton("206", R.drawable.ic_views)
+        val viewsItem = statistics.getItemByType(StatisticType.VIEWS)
+        Statistics(
+            viewsItem.count.toString(),
+            R.drawable.ic_views,
+            onItemClickListener = { onItemClickListener(viewsItem) }
+        )
         Spacer(Modifier.weight(1f, true))
-        BottomMenuButton("206", R.drawable.ic_share)
-        BottomMenuButton("11", R.drawable.ic_comments)
-        BottomMenuButton("491", R.drawable.ic_chosen)
+        val sharesItem = statistics.getItemByType(StatisticType.SHARES)
+        Statistics(
+            sharesItem.count.toString(),
+            R.drawable.ic_share,
+            onItemClickListener = { onItemClickListener(sharesItem) }
+        )
+        val commentsItem = statistics.getItemByType(StatisticType.COMMENTS)
+        Statistics(
+            commentsItem.count.toString(),
+            R.drawable.ic_comments,
+            onItemClickListener = { onItemClickListener(commentsItem) }
+        )
+        val likesItem = statistics.getItemByType(StatisticType.LIKES)
+        Statistics(
+            likesItem.count.toString(),
+            R.drawable.ic_chosen,
+            onItemClickListener = { onItemClickListener(likesItem) }
+        )
     }
 }
 
+private fun List<StatisticItem>.getItemByType(type: StatisticType): StatisticItem {
+    return this.find { it.type == type } ?: throw IllegalStateException("Not exist type")
+}
+
 @Composable
-private fun VkAvatar() {
+private fun VkAvatar(feedPost: FeedPost) {
     Image(
         modifier = Modifier
             .size(50.dp)
@@ -121,7 +158,7 @@ private fun VkAvatar() {
                 painterResource(id = R.drawable.ic_launcher_background),
                 contentScale = ContentScale.Inside,
             ),
-        painter = painterResource(id = R.drawable.ic_launcher_foreground),
+        painter = painterResource(id = feedPost.avatarResId),
         contentDescription = stringResource(R.string.instagram_logo),
         contentScale = ContentScale.Inside,
 
@@ -142,22 +179,23 @@ private fun MenuButton(id: ImageVector) {
 }
 
 @Composable
-private fun BottomMenuButton(value: String, @DrawableRes id: Int) {
+private fun Statistics(
+    value: String,
+    @DrawableRes id: Int,
+    onItemClickListener: () -> Unit
+) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.padding(0.dp)
-    ) {
-        Text(text = value)
-        IconButton(
-            onClick = { /*TODO*/ },
-            modifier = Modifier.wrapContentSize(),
-        ) {
-            Icon(
+        modifier = Modifier
+            .padding(8.dp)
+            .clickable { onItemClickListener() },
 
-                painter = painterResource(id),
-                contentDescription = stringResource(R.string.bottom_menu)
-            )
-        }
+        ) {
+        Icon(
+            painter = painterResource(id),
+            contentDescription = stringResource(R.string.bottom_menu)
+        )
+        Text(text = value)
     }
 }
 
