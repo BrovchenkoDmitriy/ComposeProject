@@ -44,17 +44,20 @@ import com.example.composeproject.domain.StatisticType
 fun VkNewsCard(
     modifier: Modifier = Modifier,
     feedPost: FeedPost,
-    onStatisticsItemClickListener: (StatisticItem) -> Unit
+    onItemViewClickListener: (StatisticItem) -> Unit,
+    onItemShareClickListener: (StatisticItem) -> Unit,
+    onItemCommentClickListener: (StatisticItem) -> Unit,
+    onItemLikeClickListener: (StatisticItem) -> Unit
 
 ) {
     Card(
-        shape = RoundedCornerShape(4.dp),
+        modifier = modifier,
+        shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.background,
             contentColor = MaterialTheme.colorScheme.onBackground
         ),
         border = BorderStroke(1.dp, Color.LightGray),
-        modifier = Modifier.padding(4.dp)
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
@@ -75,7 +78,10 @@ fun VkNewsCard(
             )
             StatisticsOfVkNewsCard(
                 feedPost.statistics,
-                onItemClickListener = onStatisticsItemClickListener
+                onItemViewClickListener = onItemViewClickListener,
+                onItemShareClickListener = onItemShareClickListener,
+                onItemCommentClickListener = onItemCommentClickListener,
+                onItemLikeClickListener = onItemLikeClickListener
             )
         }
     }
@@ -106,7 +112,10 @@ private fun HeadOfVkNewsCard(feedPost: FeedPost) {
 @Composable
 private fun StatisticsOfVkNewsCard(
     statistics: List<StatisticItem>,
-    onItemClickListener: (StatisticItem) -> Unit
+    onItemViewClickListener: (StatisticItem) -> Unit,
+    onItemShareClickListener: (StatisticItem) -> Unit,
+    onItemCommentClickListener: (StatisticItem) -> Unit,
+    onItemLikeClickListener: (StatisticItem) -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -118,26 +127,26 @@ private fun StatisticsOfVkNewsCard(
         Statistics(
             viewsItem.count.toString(),
             R.drawable.ic_views,
-            onItemClickListener = { onItemClickListener(viewsItem) }
+            onItemClickListener = { onItemViewClickListener(viewsItem) }
         )
         Spacer(Modifier.weight(1f, true))
         val sharesItem = statistics.getItemByType(StatisticType.SHARES)
         Statistics(
             sharesItem.count.toString(),
             R.drawable.ic_share,
-            onItemClickListener = { onItemClickListener(sharesItem) }
+            onItemClickListener = { onItemShareClickListener(sharesItem) }
         )
         val commentsItem = statistics.getItemByType(StatisticType.COMMENTS)
         Statistics(
             commentsItem.count.toString(),
             R.drawable.ic_comments,
-            onItemClickListener = { onItemClickListener(commentsItem) }
+            onItemClickListener = { onItemCommentClickListener(commentsItem) }
         )
         val likesItem = statistics.getItemByType(StatisticType.LIKES)
         Statistics(
             likesItem.count.toString(),
             R.drawable.ic_chosen,
-            onItemClickListener = { onItemClickListener(likesItem) }
+            onItemClickListener = { onItemLikeClickListener(likesItem) }
         )
     }
 }
