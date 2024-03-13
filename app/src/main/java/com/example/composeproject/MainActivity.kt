@@ -16,7 +16,6 @@ class MainActivity : ComponentActivity() {
         setContent {
             ComposeProjectTheme {
                 TestLazyColumn(viewModel = viewModel)
-//                MainScreenNew(viewModel)
             }
         }
     }
