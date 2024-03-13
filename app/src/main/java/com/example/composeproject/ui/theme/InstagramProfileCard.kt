@@ -20,8 +20,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -35,11 +33,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.composeproject.R
+import com.example.composeproject.domain.InstagramModel
 
 @Composable
-fun InstagramProfileCard(viewModel: VkNewsMainScreenViewModel) {
-    Log.d("State", "InstagramProfileCard")
-    val isFollowed = viewModel.isFollowing.observeAsState(false)
+fun InstagramProfileCard(
+    model: InstagramModel,
+    onFollowButtonClickListener: (InstagramModel)->Unit
+) {
     Card(
         shape = RoundedCornerShape(
             topStart = 4.dp,
@@ -73,15 +73,15 @@ fun InstagramProfileCard(viewModel: VkNewsMainScreenViewModel) {
                 UserStatistics("9.000", "Following")
             }
             Text(
-                text = "Instagram",
+                text = "Instagram ${model.id}",
                 fontFamily = FontFamily.Cursive,
                 fontSize = 32.sp,
                 modifier = Modifier.padding(start = 16.dp)
             )
-            ContactInfo(value = "#YoursToMake")
+            ContactInfo(value = "#${model.tittle}")
             ContactInfo(value = "www.facebook.com/emotional_health")
-            FollowButton(isFollowed = isFollowed) {
-                viewModel.changeFollowStatus()
+            FollowButton(isFollowed = model.isFollowed) {
+                onFollowButtonClickListener(model)
             }
         }
     }
@@ -98,14 +98,14 @@ private fun ContactInfo(value: String) {
 }
 
 @Composable
-private fun FollowButton(isFollowed: State<Boolean>, clickListener: () -> Unit) {
+private fun FollowButton(isFollowed: Boolean, clickListener: () -> Unit) {
     Log.d("State", "FollowButton")
     Button(
         modifier = Modifier
             .padding(start = 16.dp, bottom = 16.dp),
         shape = RoundedCornerShape(4.dp),
         onClick = { clickListener() },
-        colors = if (isFollowed.value) {
+        colors = if (isFollowed) {
             ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary.copy(0.5f))
         } else {
             ButtonDefaults.buttonColors()
@@ -113,7 +113,7 @@ private fun FollowButton(isFollowed: State<Boolean>, clickListener: () -> Unit) 
 
     ) {
         Text(
-            text = if (isFollowed.value) "Unfollow"
+            text = if (isFollowed) "Unfollow"
             else "Follow"
         )
     }
@@ -166,13 +166,3 @@ private fun InstagramLogo() {
         contentScale = ContentScale.Inside,
     )
 }
-
-//@Preview
-//@Composable
-//fun Dark() {
-//    ComposeProjectTheme(
-//        darkTheme = true
-//    ) {
-//        InstagramProfileCard()
-//    }
-//}
