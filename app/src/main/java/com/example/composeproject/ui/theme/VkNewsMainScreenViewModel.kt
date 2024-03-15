@@ -33,4 +33,11 @@ class VkNewsMainScreenViewModel : ViewModel() {
         }
         _models.value = newList
     }
+
+    fun deleteModel(instagramModel: InstagramModel) {
+        val newList = models.value?.toMutableList() ?: mutableListOf()
+        newList.remove(instagramModel)
+        _models.value = newList
+
+    }
 }
