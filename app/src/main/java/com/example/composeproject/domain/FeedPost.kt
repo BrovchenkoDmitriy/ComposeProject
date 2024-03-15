@@ -3,6 +3,7 @@ package com.example.composeproject.domain
 import com.example.composeproject.R
 
 data class FeedPost(
+    val id:Int,
     val communityName: String = "уволено",
     val publicationDate: String = "14:20",
     val avatarResId: Int = R.drawable.ic_launcher_foreground,
