@@ -1,4 +1,4 @@
-package com.example.composeproject.ui.theme
+package com.example.composeproject.TestComposableFunctions
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

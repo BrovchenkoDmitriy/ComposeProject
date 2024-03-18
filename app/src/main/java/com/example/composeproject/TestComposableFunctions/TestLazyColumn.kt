@@ -1,4 +1,4 @@
-package com.example.composeproject.ui.theme
+package com.example.composeproject.TestComposableFunctions
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.example.composeproject.ui.theme.InstagramProfileCard
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

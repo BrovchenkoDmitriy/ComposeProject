@@ -1,10 +1,11 @@
-package com.example.composeproject.ui.theme
+package com.example.composeproject
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.composeproject.domain.FeedPost
 import com.example.composeproject.domain.StatisticItem
+import com.example.composeproject.ui.theme.NavigationItem
 
 class MainViewModel : ViewModel() {
 
@@ -14,6 +15,13 @@ class MainViewModel : ViewModel() {
                 FeedPost(id = it, communityName = "Tittle $it")
             )
         }
+    }
+
+    private val _selectedNavItem = MutableLiveData<NavigationItem>(NavigationItem.Home)
+    val selectedNavItem: LiveData<NavigationItem> = _selectedNavItem
+
+    fun selectItem(item: NavigationItem){
+        _selectedNavItem.value = item
     }
 
     private val _feedPosts = MutableLiveData<List<FeedPost>>(initList)
