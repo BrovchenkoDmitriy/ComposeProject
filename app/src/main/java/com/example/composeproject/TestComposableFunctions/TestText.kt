@@ -1,4 +1,4 @@
-package com.example.composeproject.ui.theme
+package com.example.composeproject.TestComposableFunctions
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
