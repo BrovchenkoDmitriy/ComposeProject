@@ -1,4 +1,4 @@
-package com.example.composeproject.TestComposableFunctions
+package com.example.composeproject.testComposableFunctions
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -34,13 +34,13 @@ fun TestLazyColumn(viewModel: VkNewsMainScreenViewModel) {
 //        val lazyListState = rememberLazyListState()
 //        val scope = rememberCoroutineScope() // lazyListState.scrollToItem(...) - suspend, потому нужен scope
         LazyColumn (
-//            state = lazyListState //для работы со стейтом списка (переход к нужному элементу, показать индекс первого видимого элемента и т.д.
+//            state = lazyListState //для работы со стейтом списка(переход к нужному элементу, показать индекс первого видимого элемента и т.д.)
         ){
 
             items(models.value, key = { it.id }) { instagramModel ->
                 val dismissState: DismissState =
                     rememberDismissState(
-                        positionalThreshold = { _ -> 156.dp.toPx() } //устанавливаем насколько надо cдвинуть элемент для удаления
+                        positionalThreshold = { _ -> 156.dp.toPx() } //устанавливаем насколько надо сдвинуть элемент для удаления
                     )
                 if (dismissState.isDismissed(DismissDirection.EndToStart)) {
                     viewModel.deleteModel(instagramModel)

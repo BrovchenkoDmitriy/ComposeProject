@@ -1,4 +1,4 @@
-package com.example.composeproject.TestComposableFunctions
+package com.example.composeproject.testComposableFunctions
 
 import android.util.Log
 import androidx.compose.foundation.layout.padding

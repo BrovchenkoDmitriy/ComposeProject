@@ -1,4 +1,4 @@
-package com.example.composeproject.TestComposableFunctions
+package com.example.composeproject.testComposableFunctions
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
