@@ -32,7 +32,7 @@ fun HomeScreen(viewModel: MainViewModel) {
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.background)
     ) {
-        val models = viewModel.feedPosts.observeAsState(listOf())
+        val feedPosts = viewModel.feedPosts.observeAsState(listOf())
         LazyColumn(
             contentPadding = PaddingValues(
                 top = 16.dp,
@@ -41,7 +41,7 @@ fun HomeScreen(viewModel: MainViewModel) {
                 bottom = 90.dp
             ), verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            items(models.value, key = { it.id }) { feedPost ->
+            items(feedPosts.value, key = { it.id }) { feedPost ->
                 val dismissState: DismissState =
                     rememberDismissState(
                         positionalThreshold = { _ -> 156.dp.toPx() } //устанавливаем насколько надо cдвинуть элемент для удаления
