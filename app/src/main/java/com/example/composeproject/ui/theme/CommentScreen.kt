@@ -35,7 +35,8 @@ import com.example.composeproject.domain.FeedPost
 @Composable
 fun CommentScreen(
     feedPost: FeedPost,
-    comments: List<CommentPost>
+    comments: List<CommentPost>,
+    onBackPress: () -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -47,7 +48,7 @@ fun CommentScreen(
                         )
                     },
                     navigationIcon = {
-                        IconButton(onClick = {}) {
+                        IconButton(onClick = onBackPress) {
                             Icon(
                                 Icons.Filled.ArrowBack,
                                 contentDescription = null

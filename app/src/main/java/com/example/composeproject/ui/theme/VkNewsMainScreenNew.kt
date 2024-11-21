@@ -19,8 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.composeproject.MainViewModel
-import com.example.composeproject.domain.CommentPost
-import com.example.composeproject.domain.FeedPost
 import com.example.composeproject.navigation.AppNavGraph
 import com.example.composeproject.navigation.rememberNavigationState
 
@@ -68,13 +66,7 @@ fun MainScreenNew(viewModel: MainViewModel) {
                 TextCounter(name = "Favorite")
             },
             profileScreenContent = {
-//                TextCounter(name = "Profile")
-                val comments = mutableListOf<CommentPost>().apply {
-                    repeat(20){
-                        add(CommentPost(it))
-                    }
-                }
-                CommentScreen(feedPost =  FeedPost(0), comments)
+
             }
         )
     }
