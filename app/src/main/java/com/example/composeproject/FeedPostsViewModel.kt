@@ -70,8 +70,4 @@ class FeedPostsViewModel : ViewModel() {
         _screenState.value = Posts(posts = newList)
     }
 
-//    fun showComments(feedPost: FeedPost) {
-//        savedState = screenState.value
-//        _screenState.value = Comments(feedPost = feedPost, comments = comments)
-//    }
 }

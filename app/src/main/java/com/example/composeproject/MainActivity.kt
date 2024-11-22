@@ -8,13 +8,11 @@ import com.example.composeproject.ui.theme.ComposeProjectTheme
 import com.example.composeproject.ui.theme.MainScreenNew
 
 class MainActivity : ComponentActivity() {
-
-    private val viewModel by viewModels<FeedPostsViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             ComposeProjectTheme {
-                MainScreenNew(viewModel = viewModel)
+                MainScreenNew()
             }
         }
     }
