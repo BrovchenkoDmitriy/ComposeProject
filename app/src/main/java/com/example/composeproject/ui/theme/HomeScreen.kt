@@ -22,16 +22,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.composeproject.MainViewModel
+import com.example.composeproject.FeedPostsViewModel
 import com.example.composeproject.domain.FeedPost
 import com.example.composeproject.ui.theme.CommentScreen
-import com.example.composeproject.ui.theme.HomeScreenState.Comments
-import com.example.composeproject.ui.theme.HomeScreenState.Initial
-import com.example.composeproject.ui.theme.HomeScreenState.Posts
+import com.example.composeproject.ui.theme.FeedPostsScreenState.Comments
+import com.example.composeproject.ui.theme.FeedPostsScreenState.Initial
+import com.example.composeproject.ui.theme.FeedPostsScreenState.Posts
 import com.example.composeproject.ui.theme.VkNewsCard
 
 @Composable
-fun HomeScreen(viewModel: MainViewModel) {
+fun HomeScreen(viewModel: FeedPostsViewModel) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -65,7 +65,7 @@ fun HomeScreen(viewModel: MainViewModel) {
 @Composable
 fun FeedPosts(
     feedPosts: List<FeedPost>,
-    viewModel: MainViewModel
+    viewModel: FeedPostsViewModel
 ) {
     LazyColumn(
         contentPadding = PaddingValues(
