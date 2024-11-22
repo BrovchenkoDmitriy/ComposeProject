@@ -23,53 +23,61 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.composeproject.CommentsViewModel
+import com.example.composeproject.CommentsViewModelFactory
 import com.example.composeproject.domain.CommentPost
 import com.example.composeproject.domain.FeedPost
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CommentScreen(
-    feedPost: FeedPost,
-    comments: List<CommentPost>,
     onBackPress: () -> Unit,
+    feedPost: FeedPost
 ) {
-    Scaffold(
-        topBar = {
-            Surface(shadowElevation = 4.dp) {
-                TopAppBar(
-                    title = {
-                        Text(
-                            text = "Comment for FeedPost Id: ${feedPost.id}"
-                        )
-                    },
-                    navigationIcon = {
-                        IconButton(onClick = onBackPress) {
-                            Icon(
-                                Icons.Filled.ArrowBack,
-                                contentDescription = null
+    val viewModel: CommentsViewModel = viewModel(factory = CommentsViewModelFactory(feedPost))
+    val screenState = viewModel.screenState.observeAsState(CommentsScreenState.Initial)
+    val currentState = screenState.value
+    if (currentState is CommentsScreenState.Comments) {
+        Scaffold(
+            topBar = {
+                Surface(shadowElevation = 4.dp) {
+                    TopAppBar(
+                        title = {
+                            Text(
+                                text = "Comment for FeedPost Id: ${currentState.feedPost.id}"
                             )
-                        }
-                    },
-                )
+                        },
+                        navigationIcon = {
+                            IconButton(onClick = onBackPress) {
+                                Icon(
+                                    Icons.Filled.ArrowBack,
+                                    contentDescription = null
+                                )
+                            }
+                        },
+                    )
+                }
             }
-        }
-    ) { paddingValues ->
-        LazyColumn(
-            modifier = Modifier.padding(paddingValues),
-            contentPadding = PaddingValues(
-                top = 4.dp,
-                start = 8.dp,
-                end = 8.dp,
-                bottom = 80.dp
-            )
-        ) {
-            items(comments, key = { it.id }) { commentPost ->
-                CommentItem(commentPost = commentPost)
+        ) { paddingValues ->
+            LazyColumn(
+                modifier = Modifier.padding(paddingValues),
+                contentPadding = PaddingValues(
+                    top = 4.dp,
+                    start = 8.dp,
+                    end = 8.dp,
+                    bottom = 80.dp
+                )
+            ) {
+                items(currentState.comments, key = { it.id }) { commentPost ->
+                    CommentItem(commentPost = commentPost)
+                }
             }
         }
     }
