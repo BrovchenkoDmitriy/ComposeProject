@@ -18,13 +18,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.example.composeproject.MainViewModel
+import com.example.composeproject.FeedPostsViewModel
 import com.example.composeproject.navigation.AppNavGraph
 import com.example.composeproject.navigation.rememberNavigationState
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun MainScreenNew(viewModel: MainViewModel) {
+fun MainScreenNew(viewModel: FeedPostsViewModel) {
     val navigationState = rememberNavigationState()
     Scaffold(
         bottomBar = {

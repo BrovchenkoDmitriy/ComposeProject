@@ -3,21 +3,13 @@ package com.example.composeproject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.composeproject.domain.CommentPost
 import com.example.composeproject.domain.FeedPost
 import com.example.composeproject.domain.StatisticItem
-import com.example.composeproject.ui.theme.HomeScreenState
-import com.example.composeproject.ui.theme.HomeScreenState.Comments
-import com.example.composeproject.ui.theme.HomeScreenState.Posts
+import com.example.composeproject.ui.theme.FeedPostsScreenState
+import com.example.composeproject.ui.theme.FeedPostsScreenState.Posts
 import com.example.composeproject.ui.theme.NavigationItem
 
-class MainViewModel : ViewModel() {
-
-    private val comments = mutableListOf<CommentPost>().apply {
-        repeat(10) {
-            add(CommentPost(id = it))
-        }
-    }
+class FeedPostsViewModel : ViewModel() {
 
     private val initList = mutableListOf<FeedPost>().apply {
         repeat(10) {
@@ -35,10 +27,10 @@ class MainViewModel : ViewModel() {
     }
 
     private val initialState = Posts(posts = initList)
-    private var savedState: HomeScreenState? = initialState
+    private var savedState: FeedPostsScreenState? = initialState
 
-    private val _screenState = MutableLiveData<HomeScreenState>(initialState)
-    val screenState: LiveData<HomeScreenState> = _screenState
+    private val _screenState = MutableLiveData<FeedPostsScreenState>(initialState)
+    val screenState: LiveData<FeedPostsScreenState> = _screenState
 
     fun updateCount(feedPost: FeedPost, item: StatisticItem) {
         val currentState = screenState.value
@@ -78,12 +70,8 @@ class MainViewModel : ViewModel() {
         _screenState.value = Posts(posts = newList)
     }
 
-    fun showComments(feedPost: FeedPost) {
-        savedState = screenState.value
-        _screenState.value = Comments(feedPost = feedPost, comments = comments)
-    }
-
-    fun closeComments() {
-        _screenState.value = savedState
-    }
+//    fun showComments(feedPost: FeedPost) {
+//        savedState = screenState.value
+//        _screenState.value = Comments(feedPost = feedPost, comments = comments)
+//    }
 }
