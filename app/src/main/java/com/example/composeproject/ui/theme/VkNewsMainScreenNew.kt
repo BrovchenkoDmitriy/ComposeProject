@@ -19,9 +19,11 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.composeproject.domain.FeedPost
 import com.example.composeproject.navigation.AppNavGraph
+import com.example.composeproject.navigation.Screen
 import com.example.composeproject.navigation.rememberNavigationState
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -35,7 +37,6 @@ fun MainScreenNew() {
     Scaffold(
         bottomBar = {
             val navBackStackEntry by navigationState.navHostController.currentBackStackEntryAsState()
-            val currentRoute = navBackStackEntry?.destination?.route
             val items = listOf(
                 NavigationItem.Home,
                 NavigationItem.Favorite,
@@ -43,9 +44,17 @@ fun MainScreenNew() {
             )
             NavigationBar {
                 items.forEach { navigationItem ->
+                    val selected = navBackStackEntry?.destination?.hierarchy?.any {
+                        it.route == navigationItem.screen.route
+                    } ?: false
                     NavigationBarItem(
-                        selected = currentRoute == navigationItem.screen.route,
-                        onClick = { navigationState.navigateTo(navigationItem.screen.route) },
+                        selected = selected,
+                        onClick = {
+                            if (!selected){
+                                navigationState.navigateTo(navigationItem.screen.route)
+                            }
+
+                        },
                         icon = {
                             Icon(
                                 imageVector = navigationItem.icon,
@@ -67,16 +76,17 @@ fun MainScreenNew() {
     ) {
         AppNavGraph(
             navHostController = navigationState.navHostController,
-            homeScreenContent = {
-                if (commentsToPost.value == null) {
-                    HomeScreen(onCommentClickListener = { commentsToPost.value = it })
-                } else {
-                    CommentScreen(
-                        feedPost = commentsToPost.value!!,
-                        onBackPress = { commentsToPost.value = null }
-                    )
-                }
-
+            feedPostsScreenContent = {
+                HomeScreen(onCommentClickListener = {
+                    commentsToPost.value = it
+                    navigationState.navigateToComments()
+                })
+            },
+            commentsScreenContent = {
+                CommentScreen(
+                    feedPost = commentsToPost.value!!,
+                    onBackPress = { navigationState.navHostController.popBackStack() }
+                )
             },
             favouriteScreenContent = {
                 TextCounter(name = "Favorite")

@@ -14,7 +14,7 @@ sealed class NavigationItem(
     val icon: ImageVector
 ) {
     object Home :
-        NavigationItem(Screen.NewsFeed, R.string.navigation_item_home, Icons.Outlined.Home)
+        NavigationItem(Screen.Home, R.string.navigation_item_home, Icons.Outlined.Home)
 
     object Favorite :
         NavigationItem(Screen.Favourite, R.string.navigation_item_favorite, Icons.Outlined.Favorite)
